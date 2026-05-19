@@ -1,0 +1,104 @@
+% 爆炸超压拟合公式 — LaTeX 代码
+% 自动生成, 可直接插入 Word (用 LaTeX 模式) 或复制到 LaTeX 编辑器
+
+\section*{爆炸冲击波超压峰值经验公式}
+
+\subsection*{变量定义}
+\begin{align*}
+  V_n &= \frac{V}{1000} \quad (\text{归一化速度, m/s}) \\
+  T_h &= T_0 - 6.5H \quad (\text{海拔修正温度, K}) \\
+  S_p &= \left(\frac{T_h}{T_0}\right)^{5.25588} \quad (\text{萨克斯缩放因子}) \\
+  T_0 &= 288.15\,\mathrm{K} \quad (\text{海平面标准温度})
+\end{align*}
+
+\subsection*{通用公式结构}
+\begin{equation}
+  P_{\mathrm{dyn}}(Z, S_p, \theta, V) = T_1 + T_2 + T_3 + B \cdot \mathbf{1}_{Z=4}
+\end{equation}
+\begin{align*}
+  T_1 &= \frac{S_p^{2/3}}{Z} \sum_{k=0}^{6} (a_{1,k} + b_{1,k} V_n) \cos(k\theta) \\
+  T_2 &= \frac{S_p^{1/3}}{Z^2} \sum_{k=0}^{6} (a_{2,k} + b_{2,k} V_n) \cos(k\theta) \\
+  T_3 &= \frac{1}{Z^3} \sum_{k=0}^{6} (a_{3,k} + b_{3,k} V_n) \cos(k\theta)
+\end{align*}
+
+\textbf{使用规则:}
+\begin{itemize}
+  \item $Z \leq 2.5$: 使用段S1系数 (中近场, Z=1,2)
+  \item $2.5 < Z \leq 3.5$: 使用段S2系数 (中场, Z=3)
+  \item $Z > 3.5$: 使用段S3系数 (远场边界, Z=4, 含前向增强项B)
+\end{itemize}
+
+\subsubsection*{段S1 (Z=1,2) 系数}
+\begin{table}[h]
+  \centering
+  \caption{段S1 (Z=1,2) 拟合系数 ($k=0$ 为常数项)}
+  \begin{tabular}{c|rrr|rrr|rrr}
+    \hline
+    \multicolumn{1}{c|}{} & \multicolumn{3}{c|}{$T_1$ ($S_p^{2/3}/Z$)} & \multicolumn{3}{c|}{$T_2$ ($S_p^{1/3}/Z^2$)} & \multicolumn{3}{c}{$T_3$ ($1/Z^3$)} \\
+    $k$ & $a_{1,k}$ & $b_{1,k}$ & $c_{1,k}$ & $a_{2,k}$ & $b_{2,k}$ & $c_{2,k}$ & $a_{3,k}$ & $b_{3,k}$ & $c_{3,k}$ \\
+    \hline
+    $0 (const)$ & -0.0315 & 0.1143 & -0.3404 & 0.7034 & -0.7843 & 1.3293 & 0.0902 & 0.5949 & -0.7888 \\
+    $\\cos\\theta$ & -0.0334 & -0.3035 & -- & -0.1562 & 1.3281 & -- & 0.1479 & -0.3379 & -- \\
+    $\\cos2\\theta$ & 0.1562 & 0.1926 & -- & -0.6674 & -0.2956 & -- & 0.0418 & 0.3030 & -- \\
+    $\\cos3\\theta$ & 0.0897 & 0.2819 & -- & -0.1753 & -0.8250 & -- & 0.0603 & 0.2533 & -- \\
+    $\\cos4\\theta$ & -0.2404 & 0.2360 & -- & 0.3965 & -0.5835 & -- & 0.1893 & -0.0087 & -- \\
+    $\\cos5\\theta$ & 0.0099 & -0.1808 & -- & -0.0602 & 0.3932 & -- & 0.0577 & -0.0785 & -- \\
+    $\\cos6\\theta$ & 0.0862 & -0.2243 & -- & -0.2085 & 0.4914 & -- & -0.0058 & -0.0491 & -- \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsubsection*{段S2 (Z=3) 系数}
+\begin{table}[h]
+  \centering
+  \caption{段S2 (Z=3) 拟合系数 ($k=0$ 为常数项)}
+  \begin{tabular}{c|rrr|rrr|rrr}
+    \hline
+    \multicolumn{1}{c|}{} & \multicolumn{3}{c|}{$T_1$ ($S_p^{2/3}/Z$)} & \multicolumn{3}{c|}{$T_2$ ($S_p^{1/3}/Z^2$)} & \multicolumn{3}{c}{$T_3$ ($1/Z^3$)} \\
+    $k$ & $a_{1,k}$ & $b_{1,k}$ & $c_{1,k}$ & $a_{2,k}$ & $b_{2,k}$ & $c_{2,k}$ & $a_{3,k}$ & $b_{3,k}$ & $c_{3,k}$ \\
+    \hline
+    $0 (const)$ & -0.1939 & 0.8537 & -0.2818 & 2.1114 & -5.7486 & 2.6740 & -1.8817 & 7.3707 & -3.7063 \\
+    $\\cos\\theta$ & -0.0020 & 0.2409 & -- & -0.2376 & -0.2892 & -- & 0.3547 & 0.5120 & -- \\
+    $\\cos2\\theta$ & 0.1690 & 0.0035 & -- & -0.8572 & 0.4799 & -- & 0.2373 & -0.4709 & -- \\
+    $\\cos3\\theta$ & 0.1557 & -0.0339 & -- & -0.5193 & 0.3812 & -- & 0.3251 & -0.8892 & -- \\
+    $\\cos4\\theta$ & 0.2059 & -0.0446 & -- & -1.2415 & 0.7117 & -- & 1.7451 & -1.5355 & -- \\
+    $\\cos5\\theta$ & -0.0479 & 0.2811 & -- & -0.3117 & -0.7575 & -- & 0.8409 & 0.4441 & -- \\
+    $\\cos6\\theta$ & -0.0488 & 0.0654 & -- & 0.1566 & -0.2285 & -- & -0.2864 & 0.3885 & -- \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsubsection*{段S3 (Z=4, 含Boost) 系数}
+\begin{table}[h]
+  \centering
+  \caption{段S3 (Z=4, 含Boost) 拟合系数 ($k=0$ 为常数项)}
+  \begin{tabular}{c|rrr|rrr|rrr}
+    \hline
+    \multicolumn{1}{c|}{} & \multicolumn{3}{c|}{$T_1$ ($S_p^{2/3}/Z$)} & \multicolumn{3}{c|}{$T_2$ ($S_p^{1/3}/Z^2$)} & \multicolumn{3}{c}{$T_3$ ($1/Z^3$)} \\
+    $k$ & $a_{1,k}$ & $b_{1,k}$ & $c_{1,k}$ & $a_{2,k}$ & $b_{2,k}$ & $c_{2,k}$ & $a_{3,k}$ & $b_{3,k}$ & $c_{3,k}$ \\
+    \hline
+    $0 (const)$ & 0.1283 & -0.3797 & 0.3849 & -1.0323 & 3.9203 & -4.3378 & 3.9097 & -10.4976 & 8.4864 \\
+    $\\cos\\theta$ & -0.1419 & 0.5964 & -- & 1.4090 & -2.7039 & -- & -2.6481 & 4.6245 & -- \\
+    $\\cos2\\theta$ & -0.1992 & 0.3208 & -- & 1.7946 & -2.5724 & -- & -4.0272 & 5.5925 & -- \\
+    $\\cos3\\theta$ & -0.2575 & 0.3837 & -- & 1.9360 & -2.8436 & -- & -3.5459 & 5.2946 & -- \\
+    $\\cos4\\theta$ & -0.4084 & 0.5426 & -- & 2.2669 & -3.1816 & -- & -3.0391 & 4.7865 & -- \\
+    $\\cos5\\theta$ & -0.2880 & 0.4183 & -- & 1.9349 & -2.9621 & -- & -3.2530 & 5.3885 & -- \\
+    $\\cos6\\theta$ & -0.0950 & 0.1697 & -- & 0.9262 & -1.4689 & -- & -1.9961 & 3.0333 & -- \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\textbf{前向增强项 (仅Z=4):}
+\begin{equation}
+  B = \frac{S_p^{2/3}}{Z}\left[V_n\left(0.5172-0.0703 f(\theta)-0.1512 f^2(\theta)\right) + V_n^2\left(-0.0600-0.2667 f(\theta)\right)\right]
+  + \frac{1}{Z^3}\left[V_n\left(-1.0814-0.7139 f(\theta)-0.5373 f^2(\theta)\right) + V_n^2\left(1.2077+3.7963 f(\theta)\right)\right]
+\end{equation}
+其中 $f(\theta) = \frac{1+\cos\theta}{2}$ 为前向定向函数。
+
+\subsection*{静爆基准公式 (V=0)}
+\begin{equation}
+  P_{\mathrm{stat}}(Z, S_p, \theta) = \frac{S_p^{2/3}}{Z}\left[0.0323+0.0000\cos\theta+0.1570\cos2\theta+0.0000\cos3\theta-0.0871\cos4\theta\right]
+  + \frac{S_p^{1/3}}{Z^2}\left[0.4871-0.0000\cos\theta-0.6306\cos2\theta-0.0000\cos3\theta+0.0824\cos4\theta\right]
+  + \frac{1}{Z^3}\left[0.1941-0.0000\cos\theta+0.0890\cos2\theta+0.0000\cos3\theta+0.2346\cos4\theta\right]
+\end{equation}
+
