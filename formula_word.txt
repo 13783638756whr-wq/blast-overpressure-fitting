@@ -1,0 +1,45 @@
+%% ====== 以下每条可单独粘贴到 Word 公式框 (Alt+=) ======
+
+%% --- 变量定义 ---
+V_n = \frac{V}{1000}
+T_h = T_0 - 6.5H
+S_p = \left(\frac{T_h}{T_0}\right)^{5.25588}
+T_0 = 288.15\,\mathrm{K}
+
+%% --- 通用公式结构 ---
+P_{\mathrm{dyn}} = T_1 + T_2 + T_3 + B \cdot \mathbf{1}_{Z=4}
+
+%% --- 三项定义 ---
+T_1 = \frac{S_p^{2/3}}{Z} \sum_{k=0}^{6} (a_{1,k} + b_{1,k} V_n) \cos(k\theta)
+T_2 = \frac{S_p^{1/3}}{Z^2} \sum_{k=0}^{6} (a_{2,k} + b_{2,k} V_n) \cos(k\theta)
+T_3 = \frac{1}{Z^3} \sum_{k=0}^{6} (a_{3,k} + b_{3,k} V_n) \cos(k\theta)
+
+%% --- 段S1 (Z <= 2.5, 即 Z=1,2) 各项展开 ---
+%% 复制以下三条分别粘贴:
+\frac{S_p^{2/3}}{Z}\left[(-0.0315+0.1143V_n-0.3404V_n^2)+(-0.0334-0.3035V_n)\cos\theta+(0.1562+0.1926V_n)\cos2\theta+(0.0897+0.2819V_n)\cos3\theta+(-0.2404+0.2360V_n)\cos4\theta+(0.0099-0.1808V_n)\cos5\theta+(0.0862-0.2243V_n)\cos6\theta\right]
+
+\frac{S_p^{1/3}}{Z^2}\left[(0.7034-0.7843V_n+1.3293V_n^2)+(-0.1562+1.3281V_n)\cos\theta+(-0.6674-0.2956V_n)\cos2\theta+(-0.1753-0.8250V_n)\cos3\theta+(0.3965-0.5835V_n)\cos4\theta+(-0.0602+0.3932V_n)\cos5\theta+(-0.2085+0.4914V_n)\cos6\theta\right]
+
+\frac{1}{Z^3}\left[(0.0902+0.5949V_n-0.7888V_n^2)+(0.1479-0.3379V_n)\cos\theta+(0.0418+0.3030V_n)\cos2\theta+(0.0603+0.2533V_n)\cos3\theta+(0.1893-0.0087V_n)\cos4\theta+(0.0577-0.0785V_n)\cos5\theta+(-0.0058-0.0491V_n)\cos6\theta\right]
+
+%% --- 段S2 (2.5 < Z <= 3.5, 即 Z=3) 各项展开 ---
+\frac{S_p^{2/3}}{Z}\left[(-0.1939+0.8537V_n-0.2818V_n^2)+(-0.0020+0.2409V_n)\cos\theta+(0.1690+0.0035V_n)\cos2\theta+(0.1557-0.0339V_n)\cos3\theta+(0.2059-0.0446V_n)\cos4\theta+(-0.0479+0.2811V_n)\cos5\theta+(-0.0488+0.0654V_n)\cos6\theta\right]
+
+\frac{S_p^{1/3}}{Z^2}\left[(2.1114-5.7486V_n+2.6740V_n^2)+(-0.2376-0.2892V_n)\cos\theta+(-0.8572+0.4799V_n)\cos2\theta+(-0.5193+0.3812V_n)\cos3\theta+(-1.2415+0.7117V_n)\cos4\theta+(-0.3117-0.7575V_n)\cos5\theta+(0.1566-0.2285V_n)\cos6\theta\right]
+
+\frac{1}{Z^3}\left[(-1.8817+7.3707V_n-3.7063V_n^2)+(0.3547+0.5120V_n)\cos\theta+(0.2373-0.4709V_n)\cos2\theta+(0.3251-0.8892V_n)\cos3\theta+(1.7451-1.5355V_n)\cos4\theta+(0.8409+0.4441V_n)\cos5\theta+(-0.2864+0.3885V_n)\cos6\theta\right]
+
+%% --- 段S3 (Z > 3.5, 即 Z=4) 各项展开 ---
+%% 基础 k=6 部分:
+\frac{S_p^{2/3}}{Z}\left[(0.1283-0.3797V_n+0.3849V_n^2)+(-0.1419+0.5964V_n)\cos\theta+(-0.1992+0.3208V_n)\cos2\theta+(-0.2575+0.3837V_n)\cos3\theta+(-0.4084+0.5426V_n)\cos4\theta+(-0.2880+0.4183V_n)\cos5\theta+(-0.0950+0.1697V_n)\cos6\theta\right]
+
+\frac{S_p^{1/3}}{Z^2}\left[(-1.0323+3.9203V_n-4.3378V_n^2)+(1.4090-2.7039V_n)\cos\theta+(1.7946-2.5724V_n)\cos2\theta+(1.9360-2.8436V_n)\cos3\theta+(2.2669-3.1816V_n)\cos4\theta+(1.9349-2.9621V_n)\cos5\theta+(0.9262-1.4689V_n)\cos6\theta\right]
+
+\frac{1}{Z^3}\left[(3.9097-10.4976V_n+8.4864V_n^2)+(-2.6481+4.6245V_n)\cos\theta+(-4.0272+5.5925V_n)\cos2\theta+(-3.5459+5.2946V_n)\cos3\theta+(-3.0391+4.7865V_n)\cos4\theta+(-3.2530+5.3885V_n)\cos5\theta+(-1.9961+3.0333V_n)\cos6\theta\right]
+
+%% 前向增强项 B (仅Z=4):
+f(\theta) = \frac{1+\cos\theta}{2}
+B = \frac{S_p^{2/3}}{Z}\left[V_n(0.5172-0.0703f-0.1512f^2)+V_n^2(-0.0600-0.2667f)\right]+\frac{1}{Z^3}\left[V_n(-1.0814-0.7139f-0.5373f^2)+V_n^2(1.2077+3.7963f)\right]
+
+%% --- 静爆公式 (V=0) ---
+P_{\mathrm{stat}} = \frac{S_p^{2/3}}{Z}\left[0.0323+0.1570\cos2\theta-0.0871\cos4\theta\right]+\frac{S_p^{1/3}}{Z^2}\left[0.4871-0.6306\cos2\theta+0.0824\cos4\theta\right]+\frac{1}{Z^3}\left[0.1941+0.0890\cos2\theta+0.2346\cos4\theta\right]
